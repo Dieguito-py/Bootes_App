@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Lalezar',
         brightness: Brightness.dark,
         primaryColor: const Color(0xFF44454B),
-        backgroundColor: const Color(0xFF44454B)
       ),
       home: const HomePage());
   }
