@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(children: [
         Appbar(),
         Map(), 
-        card(),
+        Cards()
       ],)
       );
   }
