@@ -17,7 +17,7 @@ class Map extends StatelessWidget {
             alignment: const AlignmentDirectional(0, -0.99),
             child: Container(
               width: 353,
-              height: 260,
+              height: 280,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(28)),
                 boxShadow: [BoxShadow(
