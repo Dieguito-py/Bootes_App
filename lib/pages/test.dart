@@ -25,13 +25,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<String> _getData;
+  late Future<List<String>> _getData;
 
-  Future<String> fetchData() async {
+  Future<List<String>> fetchData() async {
     final response = await http.get(Uri.parse('http://192.168.1.100/dados'));
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      return data.toString(); // Trate os dados conforme necessário
+      String data = response.body;
+      List<String> dataList = data.split("e");
+      return dataList;
     } else {
       throw Exception('Failed to load data');
     }
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('BOOTES Flutter'),
       ),
       body: Center(
-        child: FutureBuilder<String>(
+        child: FutureBuilder<List<String>>(
           future: _getData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -58,24 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dados Recebidos:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(snapshot.data ?? 'No data'),
-                  ],
-                ),
-              );
+              List<String>? dataList = snapshot.data;
+              if (dataList != null && dataList.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: dataList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('Dado ${index + 1}: ${dataList[index]}'),
+                    );
+                  },
+                );
+              } else {
+                return Text('No data');
+              }
             }
           },
         ),
