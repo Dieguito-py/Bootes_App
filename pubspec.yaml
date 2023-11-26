@@ -4,13 +4,14 @@ description: Estação de monitoramento mobile do CubeSat Bootes.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=2.19.0 <3.16.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  http: 1.1.0
 
 dev_dependencies:
   flutter_test:
