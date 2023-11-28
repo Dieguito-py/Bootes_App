@@ -1,6 +1,5 @@
 import 'package:bootes_app/widgets/appbar.dart';
 import 'package:bootes_app/widgets/card.dart';
-import 'package:bootes_app/widgets/connectbutton.dart';
 import 'package:bootes_app/widgets/map.dart';
 import 'package:flutter/material.dart';
 

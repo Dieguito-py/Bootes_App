@@ -77,7 +77,7 @@ class _CardsState extends State<Cards> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 400,
+      height: 310,
       decoration: const BoxDecoration(
         // color: Color(0xFF319E3C),
       ),
@@ -162,7 +162,7 @@ class _CardsState extends State<Cards> {
             ),
           ),
           Align(
-            alignment: const AlignmentDirectional(0.80, 0.30),
+            alignment: const AlignmentDirectional(0.80, 0.94),
             child: Container(
               width: 198,
               height: 138,
@@ -207,7 +207,7 @@ class _CardsState extends State<Cards> {
             ),
           ),
           Align(
-            alignment: const AlignmentDirectional(-0.85, 0.30),
+            alignment: const AlignmentDirectional(-0.85, 0.94),
             child: Container(
               width: 140,
               height: 138,
@@ -239,35 +239,6 @@ class _CardsState extends State<Cards> {
               ),
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional(0, 0.88),
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Digite o Endereço IP!'),
-                      content: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(hintText: '192.168.1.100'),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('Conectar'),
-                          onPressed: () {
-                            updateBaseUrl('http://${_controller.text}');
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Text('Conectar', style: TextStyle(color: Colors.white),),
-            ),
-          )
         ],
       )
 ,
