@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
             Appbar(),
             Map(), 
             Cards(),
-            Connectbutton()
+            // Connectbutton()
           ],),
       ),
       );

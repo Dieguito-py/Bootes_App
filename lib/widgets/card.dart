@@ -13,7 +13,7 @@ class _CardsState extends State<Cards> {
   late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
-  String baseUrl = 'http://192.168.1.100'; // URL padrão
+  String baseUrl = 'http://192.168.1.103'; // URL padrão
   late String humidity = '';
   late String temperature = '';
   late String pressure = '';
@@ -36,12 +36,12 @@ class _CardsState extends State<Cards> {
           } else if (i == 2) {
             pressure = dataList[i];
           } else if (i == 3) {
-            altitude = dataList[i];
+            altitude = dataList[i].split('.')[0];
           }
         }
       } else if (endpoint == 'gps') {
-        latitude = dataList[0].split('.')[0];
-        longitude = dataList[1].split('.')[0];
+        latitude = dataList[0];
+        longitude = dataList[1];
       }
     } else {
       throw Exception('Failed to load data');
@@ -103,9 +103,9 @@ class _CardsState extends State<Cards> {
                     ),
                     ),
                   ),
-                  const Align(
+                  Align(
                     alignment: AlignmentDirectional(-0.69, 1.4),
-                    child: Text('26°',
+                    child: Text('$temperature°',
                     style: TextStyle(
                       fontSize: 80,
                       color: Color(0xFFE7E6D5)
@@ -129,7 +129,7 @@ class _CardsState extends State<Cards> {
             ),
           ),
           Align(
-            alignment: const AlignmentDirectional(0.84, -0.85),
+            alignment: AlignmentDirectional(0.84, -0.85),
             child: Container(
               width: 140,
               height: 138,
@@ -137,7 +137,7 @@ class _CardsState extends State<Cards> {
                 color: const Color(0xFF1F8529),
                 borderRadius: BorderRadius.circular(25),
               ),
-              child: const Stack(
+              child:  Stack(
                 children: [
                   Align(
                     alignment: AlignmentDirectional(-0.65, -0.89),
@@ -150,7 +150,7 @@ class _CardsState extends State<Cards> {
                   ),
                   Align(
                     alignment: AlignmentDirectional(-0.45, 1),
-                    child: Text('70%',
+                    child: Text('$humidity%',
                     style: TextStyle(
                       fontSize: 70,
                       color: Color(0xFFE7E6D5)
@@ -181,9 +181,9 @@ class _CardsState extends State<Cards> {
                     ),
                     ),
                   ),
-                  const Align(
+                   Align(
                     alignment: AlignmentDirectional(-0.45, 1),
-                    child: Text('2 atm',
+                    child: Text('$pressure',
                     style: TextStyle(
                       fontSize: 70,
                       color: Color(0xFFE7E6D5)
@@ -215,7 +215,7 @@ class _CardsState extends State<Cards> {
                 color: const Color(0xFF1F7A28),
                 borderRadius: BorderRadius.circular(25),
               ),
-              child: const Stack(
+              child: Stack(
                 children: [
                   Align(
                     alignment: AlignmentDirectional(-0.65, -0.89),
@@ -228,7 +228,7 @@ class _CardsState extends State<Cards> {
                   ),
                   Align(
                     alignment: AlignmentDirectional(-0.45, 0.60),
-                    child: Text('450m',
+                    child: Text('$altitude m  ',
                     style: TextStyle(
                       fontSize: 60,
                       color: Color(0xFFE7E6D5)
