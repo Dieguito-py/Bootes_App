@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,13 +29,15 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
-  String baseUrl = 'http://192.168.1.100'; // URL padrão
+  String baseUrl = 'http://192.168.1.110'; // URL padrão
   late String humidity = '';
   late String temperature = '';
   late String pressure = '';
   late String altitude = '';
   late String latitude = '';
   late String longitude = '';
+  late GoogleMapController mapController;
+  late LatLng currentLocation;
 
   Future<void> fetchData(String endpoint) async {
     final response = await http.get(Uri.parse('$baseUrl/$endpoint'));
@@ -55,12 +58,19 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         }
       } else if (endpoint == 'gps') {
-        latitude = dataList[0].split('.')[0];
-        longitude = dataList[1].split('.')[0];
+        latitude = dataList[0];
+        longitude = dataList[1];
+        updateMap();
       }
     } else {
       throw Exception('Failed to load data');
     }
+  }
+
+  void updateMap() {
+    setState(() {
+      currentLocation = LatLng(double.parse(latitude), double.parse(longitude));
+    });
   }
 
   @override
@@ -68,9 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _getData = fetchData('dados'); // Começa obtendo os dados de 'dados'
     _controller = TextEditingController();
+    fetchData('gps'); // Obtém os dados de GPS inicialmente
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) {
       setState(() {
-        _getData = fetchData('dados'); // Atualiza os dados de 'dados' a cada 5 segundos
+        fetchData('dados'); // Atualiza os dados de 'dados' a cada 5 segundos
       });
     });
   }
@@ -85,7 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateBaseUrl(String newUrl) {
     setState(() {
       baseUrl = newUrl;
-      _getData = fetchData('dados'); // Atualiza os dados de 'dados' quando o endereço IP é alterado
+      fetchData('dados'); // Atualiza os dados de 'dados' quando o endereço IP é alterado
+      fetchData('gps'); // Obtém os novos dados de GPS ao alterar o endereço IP
     });
   }
 
@@ -141,8 +153,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text('Pressure: $pressure'),
                       Text('Altitude: $altitude'),
                       SizedBox(height: 20),
-                      Text('Latitude: $latitude'),
-                      Text('Longitude: $longitude'),
+                      if (latitude.isNotEmpty && longitude.isNotEmpty)
+                        Container(
+                          height: 300,
+                          child: GoogleMap(
+                            onMapCreated: (GoogleMapController controller) {
+                              mapController = controller;
+                            },
+                            initialCameraPosition: CameraPosition(
+                              target: currentLocation,
+                              zoom: 15.0,
+                            ),
+                            markers: {
+                              Marker(
+                                markerId: MarkerId('currentLocation'),
+                                position: currentLocation,
+                                infoWindow: InfoWindow(
+                                  title: 'Current Location',
+                                ),
+                              ),
+                            },
+                          ),
+                        ),
                     ],
                   );
                 }
