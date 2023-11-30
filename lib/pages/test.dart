@@ -110,82 +110,262 @@ class _MyHomePageState extends State<MyHomePage> {
       // appBar: AppBar(
       //   title: Text('BOOTES Flutter'),
       // ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Appbar(),
-          
-            SizedBox(height: 20),
-            FutureBuilder<void>(
-              future: _getData,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Column(
-                    children: [
-                      Text('Humidity: $humidity'),
-                      Text('Temperature: $temperature'),
-                      Text('Pressure: $pressure'),
-                      Text('Altitude: $altitude'),
-                      SizedBox(height: 20),
-                      if (latitude.isNotEmpty && longitude.isNotEmpty)
-                        Container(
-                          height: 300,
-                          child: GoogleMap(
-                            onMapCreated: (GoogleMapController controller) {
-                              mapController = controller;
-                            },
-                            initialCameraPosition: CameraPosition(
-                              target: currentLocation,
-                              zoom: 15.0,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Appbar(),
+            
+              SizedBox(height: 20),
+              FutureBuilder<void>(
+                future: _getData,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Column(
+                      children: [
+                        if (latitude.isNotEmpty && longitude.isNotEmpty)
+                          Container(
+                            width: 353,
+                            height: 280,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(28)),
+                              boxShadow: [BoxShadow(
+                                color: Colors.black26,
+                                offset: Offset(2, 4),
+                                blurRadius: 6.0,
+                                spreadRadius: 2.0,
+                              )]
                             ),
-                            markers: {
-                              Marker(
-                                markerId: MarkerId('currentLocation'),
-                                position: currentLocation,
-                                infoWindow: InfoWindow(
-                                  title: 'Current Location',
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20), // Ajuste o valor conforme desejado
+                              child: Container(
+                                height: 300,
+                                child: GoogleMap(
+                                  mapType: MapType.satellite,
+                                  zoomControlsEnabled: false,
+                                  onMapCreated: (GoogleMapController controller) {
+                                    mapController = controller;
+                                  },
+                                  initialCameraPosition: CameraPosition(
+                                    target: currentLocation,
+                                    zoom: 15.0,
+                                  ),
+                                  markers: {
+                                    Marker(
+                                      markerId: MarkerId('currentLocation'),
+                                      position: currentLocation,
+                                      infoWindow: InfoWindow(
+                                        title: 'Current Location',
+                                      ),
+                                    ),
+                                  },
                                 ),
                               ),
+                            ),
+                          ),
+                      SizedBox(height: 10),
+                        Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 310,
+                              decoration: const BoxDecoration(
+                                // color: Color(0xFF319E3C),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: const AlignmentDirectional(-0.80, -0.85),
+                                    child: Container(
+                                      width: 198,
+                                      height: 138,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF1E9A2B),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child:  Stack(
+                                        children: [
+                                          const Align(
+                                            alignment: AlignmentDirectional(-0.65, -0.89),
+                                            child: Text('Temperatura',
+                                            style: TextStyle(
+                                              color: Color(0xFFE7E6D5),
+                                              fontSize: 23,
+                                            ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.69, 1.4),
+                                            child: Text('$temperature°',
+                                            style: TextStyle(
+                                              fontSize: 80,
+                                              color: Color(0xFFE7E6D5)
+                                            ),),
+                                          ),
+                                          Align(
+                                            alignment: const AlignmentDirectional(3.4, 0),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                                  child: Image.asset(
+                                                  'assets/images/ternometro.png',
+                                                  fit: BoxFit.cover,
+                                                  width: 163,
+                                                  height:501,
+                                                  ),
+                                                ),
+                                              ),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(0.84, -0.85),
+                                    child: Container(
+                                      width: 140,
+                                      height: 138,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF1F8529),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child:  Stack(
+                                        children: [
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.65, -0.89),
+                                            child: Text('Umidade',
+                                            style: TextStyle(
+                                              color: Color(0xFFE7E6D5),
+                                              fontSize: 23,
+                                            ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.45, 1),
+                                            child: Text('$humidity%',
+                                            style: TextStyle(
+                                              fontSize: 70,
+                                              color: Color(0xFFE7E6D5)
+                                            ),),
+                                          ),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(0.80, 0.94),
+                                    child: Container(
+                                      width: 198,
+                                      height: 138,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF1DA42B),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child:  Stack(
+                                        children: [
+                                          const Align(
+                                            alignment: AlignmentDirectional(-0.40, -0.89),
+                                            child: Text('Pressão atmosférica',
+                                            style: TextStyle(
+                                              color: Color(0xFFE7E6D5),
+                                              fontSize: 23,
+                                            ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.45, 1),
+                                            child: Text('$pressure',
+                                            style: TextStyle(
+                                              fontSize: 70,
+                                              color: Color(0xFFE7E6D5)
+                                            ),),
+                                          ),
+                                          Align(
+                                            alignment: const AlignmentDirectional(1, 0),
+                                                child: ClipRRect(
+                                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                                  child: Image.asset(
+                                                  'assets/images/gauge.png',
+                                                  fit: BoxFit.contain,
+                                                  width: 113,
+                                                  height:401,
+                                                  ),
+                                                ),
+                                              ),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: const AlignmentDirectional(-0.85, 0.94),
+                                    child: Container(
+                                      width: 140,
+                                      height: 138,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF1F7A28),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.65, -0.89),
+                                            child: Text('Altitude',
+                                            style: TextStyle(
+                                              color: Color(0xFFE7E6D5),
+                                              fontSize: 23,
+                                            ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: AlignmentDirectional(-0.45, 0.60),
+                                            child: Text('$altitude m  ',
+                                            style: TextStyle(
+                                              fontSize: 60,
+                                              color: Color(0xFFE7E6D5)
+                                            ),),
+                                          ),
+                                          // )
+                                        ],
+                                      ),
+                                    ),),
+                       
+                      ],
+                    ))]);
+                  }
+                },
+              ),
+                ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Insira o Endereço IP!'),
+                        content: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(hintText: 'Ex: 192.168.1.108'),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              updateBaseUrl('http://${_controller.text}');
+                              Navigator.of(context).pop();
                             },
                           ),
-                        ),
-                    ],
+                        ],
+                      );
+                    },
                   );
-                }
-              },
-            ),
-              ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Enter IP Address'),
-                      content: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(hintText: 'Enter IP Address'),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            updateBaseUrl('http://${_controller.text}');
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Text('Change IP Address'),
-            ),
-          ],
+                },
+                child: Text('Conectar'),
+              ),
+            ],
+          ),
         ),
       ),
     );
