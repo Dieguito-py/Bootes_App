@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BOOTES Flutter',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Lalezar',
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF44454B),
       ),
       home: MyHomePage(),
     );
@@ -113,32 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Appbar(),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Enter IP Address'),
-                      content: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(hintText: 'Enter IP Address'),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            updateBaseUrl('http://${_controller.text}');
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Text('Change IP Address'),
-            ),
+          
             SizedBox(height: 20),
             FutureBuilder<void>(
               future: _getData,
@@ -181,6 +158,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }
               },
+            ),
+              ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Enter IP Address'),
+                      content: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(hintText: 'Enter IP Address'),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            updateBaseUrl('http://${_controller.text}');
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text('Change IP Address'),
             ),
           ],
         ),
