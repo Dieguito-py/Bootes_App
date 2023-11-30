@@ -6,7 +6,7 @@ class Appbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 99 ,
+      toolbarHeight: 66 ,
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Stack(

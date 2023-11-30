@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:bootes_app/widgets/appbar.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
-  String baseUrl = 'http://192.168.1.110'; // URL padrão
+  String baseUrl = 'http://192.168.1.108'; // URL padrão
   late String humidity = '';
   late String temperature = '';
   late String pressure = '';
@@ -54,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           } else if (i == 2) {
             pressure = dataList[i];
           } else if (i == 3) {
-            altitude = dataList[i];
+            altitude = dataList[i].split('.')[0];
           }
         }
       } else if (endpoint == 'gps') {
@@ -104,13 +105,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('BOOTES Flutter'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('BOOTES Flutter'),
+      // ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Appbar(),
             ElevatedButton(
               onPressed: () {
                 showDialog(

@@ -10,7 +10,6 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
   String baseUrl = 'http://192.168.1.103'; // URL padrão
@@ -51,11 +50,9 @@ class _CardsState extends State<Cards> {
   @override
   void initState() {
     super.initState();
-    _getData = fetchData('dados');
     _controller = TextEditingController();
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) {
       setState(() {
-        _getData = fetchData('dados');
       });
     });
   }
@@ -70,7 +67,6 @@ class _CardsState extends State<Cards> {
   void updateBaseUrl(String newUrl) {
     setState(() {
       baseUrl = newUrl;
-      _getData = fetchData('dados');
     });
   }
   @override

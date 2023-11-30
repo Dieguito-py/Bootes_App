@@ -38,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
   String baseUrl = 'http://192.168.1.110'; // URL padrão
@@ -79,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _getData = fetchData('dados'); // Começa obtendo os dados de 'dados'
+// Começa obtendo os dados de 'dados'
     _controller = TextEditingController();
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) {
       setState(() {
-        _getData = fetchData('dados'); // Atualiza os dados de 'dados' a cada 5 segundos
+// Atualiza os dados de 'dados' a cada 5 segundos
       });
     });
   }
@@ -98,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateBaseUrl(String newUrl) {
     setState(() {
       baseUrl = newUrl;
-      _getData = fetchData('dados'); // Atualiza os dados de 'dados' quando o endereço IP é alterado
+// Atualiza os dados de 'dados' quando o endereço IP é alterado
     });
   }
 
