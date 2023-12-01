@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BOOTES Flutter',
       theme: ThemeData(
         fontFamily: 'Lalezar',
@@ -160,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       markerId: MarkerId('currentLocation'),
                                       position: currentLocation,
                                       infoWindow: InfoWindow(
-                                        title: 'Current Location',
+                                        title: 'CubSat',
                                       ),
                                     ),
                                   },
@@ -193,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: Text('Temperatura',
                                             style: TextStyle(
                                               color: Color(0xFFE7E6D5),
-                                              fontSize: 23,
+                                              fontSize: 28,
                                             ),
                                             ),
                                           ),
@@ -238,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: Text('Umidade',
                                             style: TextStyle(
                                               color: Color(0xFFE7E6D5),
-                                              fontSize: 23,
+                                              fontSize: 28,
                                             ),
                                             ),
                                           ),
@@ -271,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: Text('Pressão atmosférica',
                                             style: TextStyle(
                                               color: Color(0xFFE7E6D5),
-                                              fontSize: 23,
+                                              fontSize: 26,
                                             ),
                                             ),
                                           ),
@@ -316,12 +317,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: Text('Altitude',
                                             style: TextStyle(
                                               color: Color(0xFFE7E6D5),
-                                              fontSize: 23,
+                                              fontSize: 30,
                                             ),
                                             ),
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(-0.45, 0.60),
+                                            alignment: AlignmentDirectional(0, 0.60),
                                             child: Text('$altitude m  ',
                                             style: TextStyle(
                                               fontSize: 60,
