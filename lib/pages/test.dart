@@ -86,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _timer = Timer.periodic(Duration(seconds: 5), (Timer t) {
       setState(() {
         fetchData('dados'); // Atualiza os dados de 'dados' a cada 5 segundos
+        fetchData('gps'); // Atualiza os dados de GPS a cada 5 segundos
       });
     });
   }
