@@ -339,7 +339,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 },
               ),
+              SizedBox(height: 20),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFE7E6D5),
+                    fixedSize: Size(400, 60)
+                  ),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -363,7 +368,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   );
                 },
-                child: Text('Conectar'),
+                child: Text('Conectar',
+                style: TextStyle(
+                  color: Color(0xFF44454B)
+                ),
+                ),
               ),
             ],
           ),
