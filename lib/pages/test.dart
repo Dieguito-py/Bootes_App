@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<void> _getData;
   late Timer _timer;
   late TextEditingController _controller;
-  String baseUrl = 'http://192.168.1.108'; // URL padrão
+  String baseUrl = 'http://192.168.1.100'; // URL padrão
   late String humidity = '';
   late String temperature = '';
   late String pressure = '';
@@ -102,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
       baseUrl = newUrl;
       fetchData('dados'); // Atualiza os dados de 'dados' quando o endereço IP é alterado
       fetchData('gps'); // Obtém os novos dados de GPS ao alterar o endereço IP
+      _getData = fetchData('dados'); // Atualiza os dados de 'dados' com o novo endereço IP
     });
   }
 
@@ -343,37 +344,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFE7E6D5),
-                    fixedSize: Size(400, 60)
+                    fixedSize: Size(200, 60)
                   ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Insira o Endereço IP!'),
-                        content: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(hintText: 'Ex: 192.168.1.108'),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              updateBaseUrl('http://${_controller.text}');
-                              Navigator.of(context).pop();
-                            },
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Insira o Endereço IP!'),
+                          content: TextField(
+                            controller: _controller,
+                            decoration: InputDecoration(hintText: 'Ex: 192.168.1.108'),
                           ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Text('Conectar',
-                style: TextStyle(
-                  color: Color(0xFF44454B)
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                // Atualizando o estado do aplicativo com o novo endereço IP
+                                setState(() {
+                                  updateBaseUrl('http://${_controller.text}');
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Conectar',
+                    style: TextStyle(
+                      color: Color(0xFF44454B),
+                      fontSize: 20
+                    ),
+                  ),
                 ),
-                ),
-              ),
+
             ],
           ),
         ),
